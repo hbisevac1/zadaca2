@@ -2,10 +2,7 @@ package ba.unsa.etf.rpr;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +21,19 @@ class FakultetTest {
     }
 
     @Test
+    void dodajPredmetIzuzetak(){
+        Fakultet etf=new Fakultet();
+        Predmet matematika=new Predmet("Inzinjerska matematika", 7, new Profesor("Severus", "Snape", "12"), 40);
+        Predmet fizika=new Predmet("Inzinjerska fizika", 6, new Profesor("Albus", "Dumbldore", "21"), 70);
+        ArrayList<Predmet> probni=new ArrayList<>();
+        probni.add(matematika); probni.add(fizika);
+        etf.dodajPredmet(matematika);
+        etf.dodajPredmet(fizika);
+        Exception exception= assertThrows(IllegalArgumentException.class, ()->etf.dodajPredmet(matematika));
+        assertEquals("Ovaj predmet vec postoji", exception.getMessage());
+    }
+
+    @Test
     void upisiStudenta() {
         Semestar s=new Semestar("Prvi");
         Fakultet etf=new Fakultet();
@@ -36,6 +46,17 @@ class FakultetTest {
     }
 
     @Test
+    void upisiStudentaIzuzetak(){
+        Semestar s=new Semestar("Prvi");
+        Fakultet etf=new Fakultet();
+        UpisniList list1=new UpisniList(new Student("Hana", "Bisevac", "18628"), s);
+        UpisniList list2= new UpisniList(new Student("Nezla", "Bisevac", "18628"), s);
+        etf.upisiStudenta(list1);
+        Exception exception = assertThrows(IllegalArgumentException.class, ()->etf.upisiStudenta(list2));
+        assertEquals("Student je vec upisan", exception.getMessage());
+    }
+
+    @Test
     void dajPrepisOcjena() {
         Semestar s=new Semestar("Prvi");
         Fakultet etf=new Fakultet();
@@ -45,9 +66,21 @@ class FakultetTest {
         etf.upisiStudenta(list1);
         etf.upisiOcjenu("18628", new Predmet("InzinjerskaMatematika", 7, new Profesor("Severus", "Snape", "12"), 40), 8);
         etf.upisiOcjenu("18628", new Predmet("Inzinjerska Fizika", 6, new Profesor("Poppy", "Pomfrey", "13"), 40), 7);
-        ArrayList<Integer> probni=new ArrayList<>();
-        probni.add(7); probni.add(8);
+        Map<Predmet, Integer> probni=new HashMap<>();
+        probni.put(new Predmet("InzinjerskaMatematika", 7, new Profesor("Severus", "Snape", "12"), 40), 8);
+        probni.put( new Predmet("Inzinjerska Fizika", 6, new Profesor("Poppy", "Pomfrey", "13"), 40), 7);
         assertEquals(probni, etf.dajPrepisOcjena(new Student("Hana", "Bisevac", "18628")));
+    }
+
+    @Test
+    void dajPrepisOcjenaIzuzetak(){
+        Semestar s=new Semestar("Prvi");
+        Fakultet etf=new Fakultet();
+        UpisniList list1=new UpisniList(new Student("Hana", "Bisevac", "18628"), s);
+        UpisniList list2= new UpisniList(new Student("Nezla", "Bisevac", "18123"), s);
+        etf.upisiStudenta(list1);
+        Exception exception=assertThrows(IllegalArgumentException.class, ()->etf.dajPrepisOcjena(new Student("Nezla", "Bisevac", "18123")));
+        assertEquals("Student ne postoji", exception.getMessage());
     }
 
     @Test
@@ -69,6 +102,17 @@ class FakultetTest {
         etf.dodajProfesora((Profesor) p4);
         etf.dodajProfesora((Profesor) p5);
         assertEquals(profe, etf.getProfesori());
+
+    }
+
+    @Test
+    void dodajProfesoraIzuzetak(){
+        Osoba p1 = new Profesor("Severus", "Snape", "1");
+        Osoba p2 = new Profesor("Minerva", "McGonagal", "1");
+        Fakultet etf=new Fakultet();
+        etf.dodajProfesora((Profesor) p1);
+        Exception exception=assertThrows(IllegalArgumentException.class, ()->etf.dodajProfesora((Profesor) p2));
+        assertEquals("Profesor vec radi na ovom fakultetu", exception.getMessage());
 
     }
 
@@ -255,5 +299,68 @@ class FakultetTest {
 
     @Test
     void profesoriIStudentiPoPredmetu() {
+        Osoba p1 = new Profesor("Severus", "Snape", "1");
+        Osoba p2 = new Profesor("Minerva", "McGonagal", "2");
+        Osoba p3 = new Profesor("Filius", "Flitwick", "3");
+        Osoba p4 = new Profesor("Poppy", "Pomfrey", "4");
+        Osoba p5 = new Profesor("Horace", "Slughorn", "5");
+
+        Predmet m1 = new Predmet("Inzinjerska matematika 1", 7, (Profesor) p1, 75);
+        Predmet m2 = new Predmet("Inzinjerska fizika 1", 5, (Profesor) p2, 60);
+        Predmet m3 = new Predmet("Osnove elektrotehnike", 7, (Profesor) p3, 80);
+        Predmet m4 = new Predmet("Liearne algebra", 5, (Profesor) p4, 60);
+        Predmet m5 = new Predmet("Uvod u programiranje", 6, (Profesor) p5, 70);
+
+        Predmet m11 = new Predmet("Inzinjerska matematik 2",7, (Profesor) p1, 80);
+        Predmet m12 = new Predmet("Tehnike programiranja", 6, (Profesor) p2, 70);
+        Predmet m13 = new Predmet("Matematicka Logika i Teorija", 7, (Profesor) p3, 70);
+        Predmet m14 = new Predmet("Vjerovatnoca i statistika", 5, (Profesor) p4, 60);
+        Predmet m15 = new Predmet("Operativni sistemi", 5, (Profesor) p5, 60);
+        Semestar prvi = new Semestar("Prvi");
+        prvi.dodajObavezniPredmet(m1); prvi.dodajObavezniPredmet(m2);
+        prvi.dodajObavezniPredmet(m3); prvi.dodajObavezniPredmet(m4);
+        prvi.dodajObavezniPredmet(m5);
+        Semestar drugi = new Semestar("Drugi");
+        drugi.dodajObavezniPredmet(m11); drugi.dodajObavezniPredmet(m12);
+        drugi.dodajObavezniPredmet(m13); drugi.dodajIzborniPredmet(m14);
+        drugi.dodajIzborniPredmet(m15);
+        Fakultet etf = new Fakultet();
+        etf.dodajProfesora((Profesor) p1);
+        etf.dodajProfesora((Profesor) p2);
+        etf.dodajProfesora((Profesor) p3);
+        etf.dodajProfesora((Profesor) p4);
+        etf.dodajProfesora((Profesor) p5);
+
+        etf.dodajPredmet(m1);
+        etf.dodajPredmet(m2);
+        etf.dodajPredmet(m3);
+        etf.dodajPredmet(m4);
+        etf.dodajPredmet(m5);
+        etf.dodajPredmet(m11);
+        etf.dodajPredmet(m12);
+        etf.dodajPredmet(m13);
+        etf.dodajPredmet(m14);
+        etf.dodajPredmet(m15);
+        UpisniList u1 = new UpisniList(new Student("Hana", "Bisevac", "18628"), prvi);
+        UpisniList u2 = new UpisniList(new Student("Hana", "Bisevac","18628"), drugi);
+        UpisniList s1 = new UpisniList(new Student("Nezla", "Bisevac", "17782"), prvi);
+        UpisniList s2 = new UpisniList(new Student("Nezla", "Bisevac", "17782"), drugi);
+        u2.upisiIzborniPredmet(m14);
+        s2.upisiIzborniPredmet(m14);
+        etf.upisiStudenta(u1);
+        etf.upisiStudenta(u2);
+        etf.upisiStudenta(s1);
+        etf.upisiStudenta(s2);
+        Map<Profesor, Integer> mapa=etf.profesoriIStudentiPoPredmetu();
+        Map<Profesor, Integer> probna=new HashMap<>();
+        probna.put((Profesor) p1, 4);
+        probna.put((Profesor) p2, 4);
+        probna.put((Profesor) p3, 4);
+        probna.put((Profesor) p4, 4);
+        probna.put((Profesor) p5, 2);
+        assertEquals(probna, mapa);
     }
+
+
+
 }

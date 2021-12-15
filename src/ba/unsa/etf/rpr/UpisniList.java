@@ -32,7 +32,7 @@ public class UpisniList {
         return predmeti;
     }
 
-    public void upisiIzborniPredmet(Predmet predmet){
+    public void upisiIzborniPredmet(Predmet predmet) throws IllegalArgumentException{
         List<Predmet> provjera=semestar.getIzborniPredmeti();
         if(!provjera.contains(predmet)) throw new IllegalArgumentException("Ovaj predmet nije ponudjen kao izborni");
         izborni.add(predmet);

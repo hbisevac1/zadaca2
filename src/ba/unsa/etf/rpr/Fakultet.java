@@ -72,14 +72,14 @@ public class Fakultet {
         if(!studenti.contains(upisniList.getStudent())) studenti.add(upisniList.getStudent());
     }
 
-    public ArrayList<Integer> dajPrepisOcjena(Student student) throws IllegalArgumentException{
-        ArrayList<Integer> lista= new ArrayList<>();
+    public Map<Predmet, Integer> dajPrepisOcjena(Student student) throws IllegalArgumentException{
+        Map<Predmet, Integer> lista= new HashMap<>();
         if(ocjene.containsKey(student.getIndex())){
             for(Map.Entry<String, Map<Predmet, Integer>> p : ocjene.entrySet()){
                 if(p.getKey().equals(student.getIndex())){
                     Map<Predmet, Integer> pom=p.getValue();
                     for(Map.Entry<Predmet, Integer> o : pom.entrySet()){
-                        lista.add(o.getValue());
+                        lista.put(o.getKey(), o.getValue());
                     }
                     break;
                 }
@@ -164,7 +164,7 @@ public class Fakultet {
         return novi;
     }
 
-    public void dodajCiklus(Ciklus prvaGodina) {
+    public void dodajCiklus(Ciklus prvaGodina) throws IllegalArgumentException{
         if(ciklusi.contains(prvaGodina)) throw new IllegalArgumentException("Ciklus je vec upisan");
         ciklusi.add(prvaGodina);
     }

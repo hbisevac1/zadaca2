@@ -409,9 +409,9 @@ public class Main {
                         for (int i = 0; i < p.size(); i++) {
                             if (p.get(i).getImePredmeta().equals(predmet)) {
                                 System.out.println("Unesite broj indeksa studenta: ");
-                                String indeks = ulaz.nextLine();
+                                String indeks = ulaz2.nextLine();
                                 System.out.println("Unesite ocjenu: ");
-                                Integer ocjena = ulaz.nextInt();
+                                Integer ocjena = ulaz2.nextInt();
                                 etf.upisiOcjenu(indeks, p.get(i), ocjena);
                                 break;
                             }
@@ -423,13 +423,16 @@ public class Main {
                         System.out.println("Unesite studenta za kojeg zelite ispisane ocjene: ");
                         String ime, prezime, indeks;
                         System.out.println("Ime: ");
-                        ime = ulaz.nextLine();
+                        ime = ulaz2.nextLine();
                         System.out.println("Prezime: ");
-                        prezime = ulaz.nextLine();
+                        prezime = ulaz2.nextLine();
                         System.out.println("Indeks: ");
                         indeks = ulaz2.nextLine();
                         Student novi = new Student(ime, prezime, indeks);
-                        etf.dajPrepisOcjena(novi);
+                        Map<Predmet, Integer> oc = etf.dajPrepisOcjena(novi);
+                        for(Map.Entry<Predmet, Integer> o : oc.entrySet()){
+                            System.out.println("Predmet: "+o.getKey().getImePredmeta()+"\nOcjena:"+o.getValue()+"\n");
+                        }
                         break;
                     }
                     case 8: {

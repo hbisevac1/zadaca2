@@ -62,7 +62,7 @@ public class Predmet {
 
     @Override
     public String toString() {
-        return "Ime predmeta: '" + imePredmeta + '\'' + "Broj ETCS bodova: "+brojBodova+
+        return "Ime predmeta: '" + imePredmeta + '\'' + " Broj ETCS bodova: "+brojBodova+
                 "\n";
     }
 }
