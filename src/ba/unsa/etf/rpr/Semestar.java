@@ -14,14 +14,14 @@ public class Semestar {
         this.obavezniPredmeti = new ArrayList<>();
     }
 
-    public void dodajIzborniPredmet(Predmet predmet){
+    public void dodajIzborniPredmet(Predmet predmet)throws IllegalArgumentException{
         if(izborniPredmeti.contains(predmet)){
             throw new IllegalArgumentException("Predmet vec postoji");
         }
         izborniPredmeti.add(predmet);
     }
 
-    public void dodajObavezniPredmet(Predmet predmet){
+    public void dodajObavezniPredmet(Predmet predmet)throws IllegalArgumentException{
         if(obavezniPredmeti.contains(predmet)){
             throw new IllegalArgumentException("Predmet vec postoji");
         }
