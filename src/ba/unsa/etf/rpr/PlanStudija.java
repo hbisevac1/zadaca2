@@ -31,4 +31,12 @@ public class PlanStudija {
         return semestri;
     }
 
+    @Override
+    public String toString() {
+        String rez="";
+        for(int i = 0; i < semestri.size(); i++){
+            rez+=semestri.get(i).toString();
+        }
+        return "Plan studija: " + nazivStudija + '\n'+ rez;
+    }
 }

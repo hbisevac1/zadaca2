@@ -13,12 +13,14 @@ public class Semestar {
         this.izborniPredmeti = new ArrayList<>();
         this.obavezniPredmeti = new ArrayList<>();
     }
+
     public void dodajIzborniPredmet(Predmet predmet){
         if(izborniPredmeti.contains(predmet)){
             throw new IllegalArgumentException("Predmet vec postoji");
         }
         izborniPredmeti.add(predmet);
     }
+
     public void dodajObavezniPredmet(Predmet predmet){
         if(obavezniPredmeti.contains(predmet)){
             throw new IllegalArgumentException("Predmet vec postoji");
@@ -36,5 +38,24 @@ public class Semestar {
 
     public List<Predmet> getObavezniPredmeti() {
         return obavezniPredmeti;
+    }
+
+    @Override
+    public String toString() {
+        String rez="";
+        rez="Semestar: "+getIdSemestra()+"\nObavezni predmeti:\n";
+        for(int i=0; i<obavezniPredmeti.size(); i++){
+            int broj=i+1;
+            rez+=broj+". "+obavezniPredmeti.get(i).getImePredmeta()+"\n";
+        }
+        if(izborniPredmeti.size()!=0){
+            rez+="Izborni predmeti:\n";
+            for (int i = 0; i<izborniPredmeti.size(); i++){
+                int broj=i+1;
+                rez+=broj+". "+izborniPredmeti.get(i).getImePredmeta()+"\n";
+            }
+        }
+        else rez+="Nema izbornih predmeta za ovaj semestar.\n";
+        return rez;
     }
 }
