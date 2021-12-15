@@ -30,4 +30,10 @@ public class Profesor extends Osoba{
     public int hashCode() {
         return Objects.hash(idProfesora);
     }
+
+    @Override
+    public String toString() {
+        return "Profesor: " + getIme()+ " "+getPrezime()+
+                "\nidProfesora='" + idProfesora + '\'';
+    }
 }

@@ -30,4 +30,9 @@ public class Student extends Osoba{
     public int hashCode() {
         return Objects.hash(index);
     }
+
+    @Override
+    public String toString() {
+        return "Ime i prezime: "+ getIme()+" "+getPrezime()+"\nBroj indeksa: "+getIndex()+"\n";
+    }
 }

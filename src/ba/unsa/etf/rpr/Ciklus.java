@@ -3,12 +3,12 @@ package ba.unsa.etf.rpr;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanStudija {
-    private  String nazivStudija;
+public class Ciklus {
+    private  int brojCiklusa;
     private List<Semestar> semestri;
 
-    public PlanStudija(String nazivStudija) {
-        this.nazivStudija = nazivStudija;
+    public Ciklus(int broj) {
+        this.brojCiklusa=broj;
         semestri=new ArrayList<>();
     }
 
@@ -19,12 +19,12 @@ public class PlanStudija {
         semestri.add(semestar);
     }
 
-    public String getNazivStudija() {
-        return nazivStudija;
+    public int getBrojCiklusa() {
+        return brojCiklusa;
     }
 
-    public void setNazivStudija(String nazivStudija) {
-        this.nazivStudija = nazivStudija;
+    public void setBrojCiklusa(int brojCiklusa) {
+        this.brojCiklusa = brojCiklusa;
     }
 
     public List<Semestar> getSemestri() {
@@ -37,6 +37,6 @@ public class PlanStudija {
         for(int i = 0; i < semestri.size(); i++){
             rez+=semestri.get(i).toString();
         }
-        return "Plan studija: " + nazivStudija + '\n'+ rez;
+        return "Ciklus: " + getBrojCiklusa() + '\n'+ rez;
     }
 }

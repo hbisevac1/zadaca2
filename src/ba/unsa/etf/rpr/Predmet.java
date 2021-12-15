@@ -59,4 +59,10 @@ public class Predmet {
     public int hashCode() {
         return Objects.hash(imePredmeta);
     }
+
+    @Override
+    public String toString() {
+        return "Ime predmeta: '" + imePredmeta + '\'' + "Broj ETCS bodova: "+brojBodova+
+                "\n";
+    }
 }
